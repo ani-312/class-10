@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishna Learning Academy - Class 10 Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f7fa;
+      color: #333;
+    }
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    header p {
+      margin: 0.2rem 0 0;
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #f9f9f9;
+    }
+    .options button.correct { background: #d4edda; border-color: #28a745; }
+    .options button.wrong { background: #f8d7da; border-color: #dc3545; }
+    .score {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .subject-selection button {
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+    }
+    .footer {
+      margin-top: 30px;
+      padding: 15px;
+      text-align: center;
+      font-size: 0.9rem;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Krishna Learning Academy</h1>
+    <p>Online Tutorial for Classes 4 to 12 - Complete Knowledge Hub</p>
+  </header>
+
+  <div class="container" id="quiz-container">
+    <div id="subject-screen" class="subject-selection">
+      <h2>Select a Subject for Class 10 Quiz</h2>
+      <button onclick="startQuiz('Mathematics')">Mathematics</button>
+      <button onclick="startQuiz('Science')">Science</button>
+      <button onclick="startQuiz('English')">English</button>
+      <button onclick="startQuiz('Social Studies')">Social Studies</button>
+      <button onclick="startQuiz('Hindi')">Hindi</button>
+      <button onclick="startQuiz('Computer Science')">Computer Science</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+      <h2 id="subject-title"></h2>
+      <div id="question-container"></div>
+      <div class="score" id="score"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Krishna Learning Academy | Empowering Students from Class 4 to 12</p>
+  </div>
+
+  <script>
+    const quizData = {
+      Mathematics: [
+        { q: "What is 5 + 7?", options: ["10", "11", "12", "13"], answer: "12" },
+        { q: "The value of π is approximately?", options: ["2.14", "3.14", "4.13", "3.41"], answer: "3.14" },
+        // add more until 30...
+      ],
+      Science: [
+        { q: "What is H2O commonly known as?", options: ["Salt", "Oxygen", "Water", "Hydrogen"], answer: "Water" },
+        { q: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Venus", "Jupiter"], answer: "Mars" },
+        // add more until 30...
+      ]
+      // similarly add other subjects with 30 questions each
+    };
+
+    let currentSubject = "";
+    let score = 0;
+
+    function startQuiz(subject) {
+      currentSubject = subject;
+      score = 0;
+      document.getElementById('subject-screen').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
+      document.getElementById('subject-title').innerText = subject + " Quiz";
+      loadQuestions();
+    }
+
+    function loadQuestions() {
+      const container = document.getElementById('question-container');
+      container.innerHTML = "";
+      quizData[currentSubject].forEach((item, index) => {
+        const qDiv = document.createElement('div');
+        qDiv.classList.add('question');
+        qDiv.innerHTML = `<p><b>Q${index+1}:</b> ${item.q}</p>`;
+        const optsDiv = document.createElement('div');
+        optsDiv.classList.add('options');
+        item.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.textContent = opt;
+          btn.onclick = () => checkAnswer(btn, item.answer);
+          optsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optsDiv);
+        container.appendChild(qDiv);
+      });
+    }
+
+    function checkAnswer(button, correct) {
+      if (button.textContent === correct) {
+        button.classList.add('correct');
+        score++;
+      } else {
+        button.classList.add('wrong');
+      }
+      document.getElementById('score').innerText = "Score: " + score;
+    }
+  </script>
+</body>
+</html>
